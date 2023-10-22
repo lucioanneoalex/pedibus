@@ -1,10 +1,11 @@
 // pages/index.js
-import React from "react";
+import React, { useEffect } from "react";
 
 const HomePage = () => {
   const sendPosition = async () => {
+    console.log("Sending position...");
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser.");
+      console.error("Geolocation is not supported by your browser.");
       return;
     }
 
@@ -21,7 +22,7 @@ const HomePage = () => {
             body: JSON.stringify({ latitude, longitude }),
           });
           const data = await response.json();
-          alert(data.message);
+          console.log(data.message);
         } catch (error) {
           console.error("Error:", error);
         }
@@ -31,6 +32,14 @@ const HomePage = () => {
       }
     );
   };
+
+  useEffect(() => {
+    // Set up an interval to send the position every 3 seconds
+    const intervalId = setInterval(sendPosition, 3000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div>

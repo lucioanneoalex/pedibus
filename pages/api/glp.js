@@ -1,10 +1,11 @@
 // pages/api/GetLastPosition.js
-import { globalState } from "../globalState";
+import fs from "fs";
+import path from "path";
 
 export default async (req, res) => {
   if (req.method === "GET") {
-    const { lastCoordinates } = globalState;
-    res.status(200).json(lastCoordinates);
+    const data = fs.readFileSync(path.resolve("./", "data.json"), "utf-8");
+    res.status(200).json(JSON.parse(data));
   } else {
     res.status(405).send("Method Not Allowed");
   }
