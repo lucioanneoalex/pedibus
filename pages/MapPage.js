@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const DynamicLeafletMap = dynamic(
-  () => import("./components/LeafletMap"),
-  { ssr: false } // This will load the component on client-side only.
+  () => import("../components/LeafletMap"), // Adjust the path if necessary
+  { ssr: false }
 );
 
 const MapPage = () => {
