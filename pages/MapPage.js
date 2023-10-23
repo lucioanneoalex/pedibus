@@ -1,6 +1,11 @@
 // pages/MapPage.js
 import React, { useState, useEffect } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import dynamic from "next/dynamic";
+
+const DynamicLeafletMap = dynamic(
+  () => import("./components/LeafletMap"),
+  { ssr: false } // This will load the component on client-side only.
+);
 
 const MapPage = () => {
   const [position, setPosition] = useState(null);
@@ -9,7 +14,7 @@ const MapPage = () => {
     try {
       const response = await fetch("/api/glp");
       const data = await response.json();
-      setPosition({ lat: data.latitude, lng: data.longitude });
+      setPosition([data.latitude, data.longitude]);
     } catch (error) {
       console.error("Error fetching position:", error);
     }
@@ -23,22 +28,7 @@ const MapPage = () => {
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, []);
 
-  return (
-    <div>
-      {console.log(position)}
-      {position && (
-        <LoadScript googleMapsApiKey="AIzaSyDoxo0ARBIGc37GIp28XEvI8V4KN3oIMEI">
-          <GoogleMap
-            mapContainerStyle={{ height: "400px", width: "100%" }}
-            center={position}
-            zoom={18}
-          >
-            <Marker position={position} />
-          </GoogleMap>
-        </LoadScript>
-      )}
-    </div>
-  );
+  return <div>{position && <DynamicLeafletMap position={position} />}</div>;
 };
 
 export default MapPage;
