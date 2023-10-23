@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   if (req.method === "GET") {
     const data = fs.readFileSync(path.resolve("./", "data.json"), "utf-8");
     res.status(200).json(JSON.parse(data));
@@ -10,3 +10,5 @@ export default async (req, res) => {
     res.status(405).send("Method Not Allowed");
   }
 };
+
+export default handler;
