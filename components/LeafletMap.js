@@ -7,7 +7,7 @@ import L from "leaflet";
 const icon = L.icon({
   iconUrl: "/marker-icon.png",
   shadowUrl: "/marker-shadow.png",
-  iconSize: [25, 41], // size of the icon
+  iconSize: [50, 33], // size of the icon
   shadowSize: [41, 41], // size of the shadow
   iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
   shadowAnchor: [14, 41], // the same for the shadow

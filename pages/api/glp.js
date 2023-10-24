@@ -19,6 +19,7 @@ const handler = async (req, res) => {
       if (!client.topology || !client.topology.isConnected()) {
         await client.connect();
       }
+
       const db = client.db("pedibus"); // replace with your database name
       const collection = db.collection("positions"); // replace with your collection name
 
